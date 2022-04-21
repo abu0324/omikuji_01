@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css1/main.css">
+    <title>Document</title>
+
+</head>
+<!--ボタン-->
+
+<!--時間-->
+<ul>
+    <button class="push" id="pull">時間と覚悟を決める</button>
+</ul>
+
+<p id="echo2">時間は？</p>
+<p id="echo3">何を削る？</p>
+
+<!--何を削る？-->
+<div class="color_box">
+    <div class="box" id="target1"></div>
+    <div class="box" id="target2"></div>
+    <div class="box" id="target3"></div>
+</div>
+<div class="container">
+    <button id="shuffle"> シャッフル </button>
+
+</div>
+
+<div class="box_1">
+    <p id="echo5">何を削る？</p>
+    <p class="text_1">を削って</p>
+    <p id="echo4">時間は？</p>
+    <p class="text_1">取り組む</p>
+
+</div>
+<h1 class="texth1">やれるのかい、やれないのかい、どっちなんだい</h1>
+</div>
+<div id="stopwatch">00:00.000</div>
+<div id="box13">
+    <div id="nakayama">やれる</div>
+    <div id="dacho">やれない</div>
+</div>
+<div id="nakayama1">
+    <p></p>
+</div>
+<div id="dacho1">
+    <p></p>
+</div>
+<p id="echo11"></p>
+
+</div>
+
+
+
+</div>
+
+
+<div id="buttons">
+    <button type="button11" id="reset" class="button">リセット</button>
+    <button type="button11" id="start" class="button">スタート</button>
+</div>
+
+<footer></footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+<script>
+
+    'use strict';
+
+
+    //シャッフル//
+    // const shuffle = document.getElementById("shuffle");
+    // const work = document.getElementById("work");
+    // shuffle.addEventListener('click', function () {
+    //   const reslut = ['work', 'sleep', 'rest'];
+    //    const number = Math.fooor(Math.random() * reslut.length);
+    //   work.textContent = reslut[number];
+    // });
+
+    // shuffle.addEventListener('click', () => {
+    //    target2.classList.toggle('circle');
+    //    $("#work").text("sleep");
+
+
+    //何を削る？//
+
+
+    const target1 = document.getElementById("target1");
+    const target2 = document.getElementById("target2");
+    const target3 = document.getElementById("target3");
+    target1.addEventListener('click', () => {
+        target1.classList.toggle('circle');
+        $("#target1").text("work");
+        $("#echo5").text("work");
+
+    });
+    target2.addEventListener('click', () => {
+        target2.classList.toggle('circle');
+        $("#target2").text("sleep");
+        $("#echo5").text("sleep");
+    });
+    target3.addEventListener('click', () => {
+        target3.classList.toggle('circle');
+        $("#target3").text("rest");
+        $("#echo5").text("rest");
+    });
+
+
+
+    //ボタン2択下段
+    {
+        const $nakayama = document.getElementById('nakayama');
+        const $nakayama1 = document.getElementById('nakayama1');
+        $nakayama.addEventListener('click', () => {
+            $nakayama1.classList.toggle('on');
+            $("#echo11").text("ya-----っ");
+            document.getElementById('start').click();
+        });
+    }
+
+    {
+        const $dacho = document.getElementById('dacho');
+        const $dacho1 = document.getElementById('dacho1');
+        $dacho.addEventListener('click', () => {
+            $dacho1.classList.toggle('on');
+            $("#echo11").text("やり直しなさいっ");
+        });
+    }
+
+
+
+
+    //ボタン2択上段
+
+
+
+    //時間
+
+
+    $("#pull").on("click", function () {
+
+        const min = 0;
+        const max = 5;
+        const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+        console.log(randomNumber);
+
+
+
+        if (randomNumber === 0) {
+            $("#echo2").text("３時間");
+            $("#echo4").text("３時間");
+            $("#echo3").text("とにかく集中");
+        } else if (randomNumber === 1) {
+            $("#echo2").text("５時間");
+            $("#echo4").text("５時間");
+            $("#echo3").text("１つ選んでね");
+        } else if (randomNumber === 2) {
+            $("#echo2").text("８時間");
+            $("#echo4").text("８時間");
+            $("#echo3").text("２つ選んでね");
+        } else if (randomNumber === 3) {
+            $("#echo2").text("５時間");
+            $("#echo4").text("５時間");
+            $("#echo3").text("１つ選んでね");
+        } else if (randomNumber === 4) {
+            $("#echo2").text("８時間");
+            $("#echo4").text("８時間");
+            $("#echo3").text("２つ選んでね");
+        } else if (randomNumber === 5) {
+            $("#echo2").text("５時間");
+            $("#echo4").text("５時間");
+            $("#echo3").text("１つ選んでね");
+        }
+    });
+
+    function draw() {
+        alert('押されました')
+    }
+
+
+    const pull = document.getElementById('pull');
+
+    pull.addEventListener('click', () => {
+        pull.textContent = 'START';
+
+    });
+
+
+    //タイマー
+
+    const stopwatch = document.getElementById('stopwatch');
+    const start = document.getElementById('start');
+    const reset = document.getElementById('reset');
+
+    let state = 'start';
+    let timerId;
+    let elapsedMs = 0;
+
+    function timeToString(millis) {
+        const ms = millis % 1000; // ミリ秒
+        const s = Math.floor(millis / 1000) % 60;
+        const m = Math.floor(millis / 1000 / 60) % 60;
+
+        const formattedMs = ms.toString().padStart(3, '0');
+        const formattedS = s.toString().padStart(2, '0');
+        const formattedM = m.toString().padStart(2, '0');
+
+        return `${formattedM}:${formattedS}.${formattedMs}`;
+    }
+
+    start.addEventListener('click', () => {
+        if (state === 'start') {
+            state = 'stop';
+            start.textContent = 'ストップ';
+            start.classList.add('stop');
+
+            let startMs = Date.now(); // 開始時間
+            startMs -= elapsedMs;
+
+            timerId = setInterval(() => {
+                const nowMs = Date.now();
+                elapsedMs = nowMs - startMs; // 経過ミリ秒
+
+                stopwatch.textContent = timeToString(elapsedMs);
+            }, 10);
+        } else { // state === start
+            state = 'start';
+            clearInterval(timerId);
+            start.textContent = 'リスタート';
+            start.classList.remove('stop');
+
+        }
+    });
+
+    reset.addEventListener('click', () => {
+        state = 'start';
+        clearInterval(timerId);
+        start.textContent = 'スタート';
+        start.classList.remove('stop');
+        elapsedMs = 0;
+        stopwatch.textContent = '00:00.000';
+    });
+
+
+</script>
+
+</body>
+
+</html>
